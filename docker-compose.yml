@@ -1,0 +1,28 @@
+web:
+  build: ./app
+  volumes:
+    - "app:/src/app"
+  ports:
+    - "80:3000"
+  links:
+   - redis
+   - db
+redis:
+    image: redis
+    ports:
+        - "6379:6379"
+db:
+  image: postgres
+  ports:
+    - "5433:5432"
+  volumes_from:
+    - dbdata
+  environment:
+    POSTGRES_PASSWORD: docker
+    POSTGRES_USER: docker
+
+dbdata:
+  image: postgres
+  volumes:
+    - /var/lib/postgresql
+  command: true
