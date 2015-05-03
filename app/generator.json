@@ -1,0 +1,85 @@
+{
+	"baseName": "hci",
+	"entities": [
+		{
+			"name": "organisation",
+			"attrs": [
+				{
+					"attrName": "name",
+					"attrType": "String",
+					"minLength": "3",
+					"maxLength": "25",
+					"enumValues": [],
+					"required": true
+				},
+				{
+					"attrName": "website",
+					"attrType": "String",
+					"minLength": "5",
+					"maxLength": "25",
+					"enumValues": [],
+					"required": true
+				},
+				{
+					"attrName": "facebookProfile",
+					"attrType": "String",
+					"minLength": "",
+					"maxLength": "",
+					"enumValues": [],
+					"required": false
+				}
+			]
+		},
+		{
+			"name": "probe",
+			"attrs": [
+				{
+					"attrName": "organisationId",
+					"attrType": "Integer",
+					"min": "",
+					"max": "",
+					"enumValues": [],
+					"required": true
+				}
+			]
+		},
+		{
+			"name": "metric",
+			"attrs": [
+				{
+					"attrName": "type",
+					"attrType": "Integer",
+					"min": "",
+					"max": "",
+					"enumValues": [],
+					"required": true
+				},
+				{
+					"attrName": "probeId",
+					"attrType": "Integer",
+					"min": "",
+					"max": "",
+					"enumValues": [],
+					"required": true
+				},
+				{
+					"attrName": "value",
+					"attrType": "Integer",
+					"min": "",
+					"max": "",
+					"enumValues": [],
+					"required": true
+				},
+				{
+					"attrName": "y",
+					"attrType": "String",
+					"minLength": "",
+					"maxLength": "",
+					"enumValues": [],
+					"required": true
+				}
+			]
+		}
+	],
+	"resources": []
+}

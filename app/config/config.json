@@ -1,0 +1,18 @@
+{
+    "development": {
+        "username": "docker",
+        "password": "docker",
+        "database": "hci-dev",
+        "host": "192.168.59.103",
+        "dialect": "postgres",
+        "port": "5433"
+    },
+    "production": {
+        "username": "DATABASE_USERNAME",
+        "password": "DATABASE_PASSWORD",
+        "database": "DATABASE_NAME",
+        "host": "PRODUCTION_DATABASE_URL",
+        "dialect": "postgres",
+        "port": "DATABASE_PORT"
+    }
+}

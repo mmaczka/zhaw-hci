@@ -1,60 +1,67 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
+var express        = require('express')
+  , bodyParser     = require('body-parser')
+  , errorHandler   = require('errorhandler')
+  , methodOverride = require('method-override')
+  , morgan         = require('morgan')
+  , http           = require('http')
+  , path           = require('path')
+  , db             = require('./models')
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
+  , organisations = require('./routes/organisations')
+  , probes = require('./routes/probes')
+  , metrics = require('./routes/metrics')
 
-var app = express();
+var app = express()
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+// all environments
+app.set('port', process.env.PORT || 3000)
+app.set('views', __dirname + '/views')
+app.set('view engine', 'jade')
+app.use(morgan('dev'))
+app.use(bodyParser())
+app.use(methodOverride())
+app.use(express.static(path.join(__dirname, 'public')))
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(__dirname + '/public/favicon.ico'));
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-
-app.use('/', routes);
-app.use('/users', users);
-
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
-});
-
-// error handlers
-
-// development error handler
-// will print stacktrace
-if (app.get('env') === 'development') {
-  app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-      message: err.message,
-      error: err
-    });
-  });
+// development only
+if ('development' === app.get('env')) {
+  app.use(errorHandler())
 }
 
-// production error handler
-// no stacktraces leaked to user
-app.use(function(err, req, res, next) {
-  res.status(err.status || 500);
-  res.render('error', {
-    message: err.message,
-    error: {}
-  });
-});
+
+/*********
+ ENDPOINTS
+ *********/
+
+app.get('/hci/organisations', organisations.findAll)
+app.get('/hci/organisations/:id', organisations.find)
+app.post('/hci/organisations', organisations.create)
+app.put('/hci/organisations/:id', organisations.update)
+app.del('/hci/organisations/:id', organisations.destroy)
+
+app.get('/hci/probes', probes.findAll)
+app.get('/hci/probes/:id', probes.find)
+app.post('/hci/probes', probes.create)
+app.put('/hci/probes/:id', probes.update)
+app.del('/hci/probes/:id', probes.destroy)
+
+app.get('/hci/metrics', metrics.findAll)
+app.get('/hci/metrics/:id', metrics.find)
+app.post('/hci/metrics', metrics.create)
+app.put('/hci/metrics/:id', metrics.update)
+app.del('/hci/metrics/:id', metrics.destroy)
 
 
-module.exports = app;
+
+
+db
+  .sequelize
+  .sync({force:true})
+  .complete(function(err) {
+    if (err) {
+      throw err
+    } else {
+      http.createServer(app).listen(app.get('port'), function() {
+        console.log('Express server listening on port ' + app.get('port'))
+      })
+    }
+  })
