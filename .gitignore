@@ -1,5 +1,5 @@
 node_modules
-public
+#public
 .tmp
 .idea
 app/client/bower_components
@@ -69,3 +69,7 @@ build/Release
 # Dependency directory
 # https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git
 app/node_modules
+
+*.iml
+
+app/public/lib

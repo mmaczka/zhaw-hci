@@ -1,0 +1,107 @@
+<div>
+
+    <h2>Organisations</h2>
+
+    <script type = "text/ng-template" id="organisation-save.html">
+        <form name="form" role="form" novalidate
+              class="ng-scope ng-invalid ng-invalid-required ng-dirty"
+              ng-submit="ok()">
+
+            <div class="modal-header">
+                <button type="button" class="close"
+                        ng-click="cancel()">&times;</button>
+                <h4 class="modal-title" id="myOrganisationLabel">Create or edit a Organisation</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>ID</label>
+                    <input type="text" class="form-control" name="id"
+                           ng-model="organisation.id" readonly>
+                </div>
+
+                
+                <div class="form-group">
+                    <label>name:</label>
+                    
+                    <input type="text" class="form-control" name="name"
+                           ng-model="organisation.name" ng-required="true"
+                           ng-minlength=3 ng-maxlength=25/>
+                    <span class="error" ng-show="form.name.$error.minlength">Must be at least 3 characters.</span>
+                    <span class="error" ng-show="form.name.$error.maxlength">Must be at most 25 characters.</span>
+                </div>
+                
+                <div class="form-group">
+                    <label>website:</label>
+                    
+                    <input type="text" class="form-control" name="website"
+                           ng-model="organisation.website" ng-required="true"
+                           ng-minlength=5 ng-maxlength=25/>
+                    <span class="error" ng-show="form.website.$error.minlength">Must be at least 5 characters.</span>
+                    <span class="error" ng-show="form.website.$error.maxlength">Must be at most 25 characters.</span>
+                </div>
+                
+                <div class="form-group">
+                    <label>facebookProfile:</label>
+                    
+                    <input type="text" class="form-control" name="facebookProfile"
+                           ng-model="organisation.facebookProfile" ng-required="false"
+                           />
+                    <span class="error" ng-show="form.facebookProfile.$error.minlength">Must be at least  characters.</span>
+                    <span class="error" ng-show="form.facebookProfile.$error.maxlength">Must be at most  characters.</span>
+                </div>
+                
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" ng-click="cancel()">Cancel
+                </button>
+                <button type="submit" ng-disabled="form.$invalid" class="btn btn-primary">Save</button>
+            </div>
+        </form>
+    </script>
+
+    <button class="btn btn-primary btn-lg" ng-click="create()">
+        <span class="glyphicon glyphicon-flash"></span> Create a new Organisation
+    </button>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>ID</th>
+                
+                <th>name</th>
+                
+                <th>website</th>
+                
+                <th>facebookProfile</th>
+                
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="organisation in organisations">
+                <td>{{organisation.id}}</td>
+                
+                <td>{{organisation.name }}</td>
+                
+                <td>{{organisation.website }}</td>
+                
+                <td>{{organisation.facebookProfile }}</td>
+                
+                <td>
+                    <button type="submit"
+                            ng-click="update(organisation.id)"
+                            class="btn">
+                        <span class="glyphicon glyphicon-pencil"></span> Edit
+                    </button>
+                    <button type="submit"
+                            ng-click="delete(organisation.id)"
+                            class="btn btn-danger">
+                        <span class="glyphicon glyphicon-remove-circle"></span> Delete
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
