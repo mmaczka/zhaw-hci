@@ -19,47 +19,47 @@
                            ng-model="metric.id" readonly>
                 </div>
 
-                
+
                 <div class="form-group">
                     <label>type:</label>
-                    
+
                     <input type="number" class="form-control" name="type"
                            ng-model="metric.type" ng-required="true"
                            />
                     <span class="error" ng-show="form.type.$error.min">Must be greater than or equal to .</span>
                     <span class="error" ng-show="form.type.$error.max">Must be less than or equal to .</span>
                 </div>
-                
+
                 <div class="form-group">
                     <label>probeId:</label>
-                    
+
                     <input type="number" class="form-control" name="probeId"
                            ng-model="metric.probeId" ng-required="true"
                            />
                     <span class="error" ng-show="form.probeId.$error.min">Must be greater than or equal to .</span>
                     <span class="error" ng-show="form.probeId.$error.max">Must be less than or equal to .</span>
                 </div>
-                
+
                 <div class="form-group">
                     <label>value:</label>
-                    
+
                     <input type="number" class="form-control" name="value"
                            ng-model="metric.value" ng-required="true"
                            />
                     <span class="error" ng-show="form.value.$error.min">Must be greater than or equal to .</span>
                     <span class="error" ng-show="form.value.$error.max">Must be less than or equal to .</span>
                 </div>
-                
+
                 <div class="form-group">
                     <label>y:</label>
-                    
+
                     <input type="text" class="form-control" name="y"
                            ng-model="metric.y" ng-required="true"
                            />
                     <span class="error" ng-show="form.y.$error.minlength">Must be at least  characters.</span>
                     <span class="error" ng-show="form.y.$error.maxlength">Must be at most  characters.</span>
                 </div>
-                
+
 
             </div>
             <div class="modal-footer">
@@ -79,29 +79,29 @@
             <thead>
             <tr>
                 <th>ID</th>
-                
+
                 <th>type</th>
-                
+
                 <th>probeId</th>
-                
+
                 <th>value</th>
-                
+
                 <th>y</th>
-                
+
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="metric in metrics">
+            <tr ng-repeat="metric in metricCalculator">
                 <td>{{metric.id}}</td>
-                
+
                 <td>{{metric.type }}</td>
-                
+
                 <td>{{metric.probeId }}</td>
-                
+
                 <td>{{metric.value }}</td>
-                
+
                 <td>{{metric.y }}</td>
-                
+
                 <td>
                     <button type="submit"
                             ng-click="update(metric.id)"

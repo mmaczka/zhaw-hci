@@ -10,26 +10,23 @@ module.exports = function (sequelize, DataTypes) {
         },
 
         type: {
-            type: DataTypes.INTEGER,
-            validate: {
-                notNull: true
-            }
-
+            type: DataTypes.STRING,
+            allowNull: false,
         },
 
         probeId: {
             type: DataTypes.INTEGER,
-            validate: {
-                notNull: true
-            },
+            allowNull: false,
             field: "probe_id"
         },
 
-        value: {
+        score: {
             type: DataTypes.INTEGER,
-            validate: {
-                notNull: true
-            }
+            allowNull: false
+        },
+        output: {
+            type: DataTypes.INTEGER,
+            allowNull: false
         }
 
     }, {

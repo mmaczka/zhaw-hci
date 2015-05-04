@@ -5,7 +5,8 @@
         "database": "hci-dev",
         "host": "192.168.59.103",
         "dialect": "postgres",
-        "port": "5433"
+        "port": "5433",
+        "native": false
     },
     "production": {
         "username": "DATABASE_USERNAME",

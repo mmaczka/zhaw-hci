@@ -24,8 +24,10 @@ Object.keys(db).forEach(function(modelName) {
 })
 
 
-//db.Organisation.hasMany(db.Probe, { foreignKey: 'organisationId' })
-//db.Probe.hasMany(db.Metric, { foreignKey: 'metricId' })
+//db.Organisation.hasMany(db.Probe, { foreignKey: 'organisation_id' })
+//db.Probe.hasMany(db.Metric, { foreignKey: 'metric_id' })
+db.Organisation.hasMany(db.Probe);
+db.Probe.hasMany(db.Metric);
 
 
 

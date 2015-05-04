@@ -11,25 +11,26 @@ module.exports = function (sequelize, DataTypes) {
 
             name: {
                 type: DataTypes.STRING,
+                allowNull: false,
                 validate: {
-                    notNull: true,
                     len: [3, 25]
                 }
             },
 
-            website: {
+            websiteUrl: {
                 type: DataTypes.STRING,
+                allowNull: false,
                 validate: {
-                    notNull: true,
                     len: [5, 25],
                     isUrl: true
-                }
+                },
+                field: "website_url"
             },
 
             facebookProfile: {
                 type: DataTypes.STRING,
+                allowNull: true,
                 validate: {
-                    notNull: false,
                     isUrl: true
                 },
                 field: "facebook_profile"
