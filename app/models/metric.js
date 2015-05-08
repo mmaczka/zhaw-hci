@@ -11,7 +11,7 @@ module.exports = function (sequelize, DataTypes) {
 
         type: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: false
         },
 
         probeId: {
@@ -25,11 +25,12 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false
         },
         output: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.TEXT,
             allowNull: false
         }
 
     }, {
+
 
         // don't add the timestamp attributes (updatedAt, createdAt)
         timestamps: false,

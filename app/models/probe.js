@@ -12,6 +12,11 @@ module.exports = function (sequelize, DataTypes) {
                 allowNull: false,
                 field: "execution_date"
             },
+            computationDate: {
+                type: DataTypes.DATE,
+                allowNull: false,
+                field: "computation_date"
+            },
             organisationId: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
@@ -20,10 +25,8 @@ module.exports = function (sequelize, DataTypes) {
         },
         {
 
-            classMethods: {
-                associate: function (db) {
-                    Probe.hasMany(db.Metric)
-                }
+            associate: function (db) {
+                Probe.hasMany(db.Metric, {onDelete: 'cascade', foreignKey: 'probe_id'});
             },
             // don't add the timestamp attributes (updatedAt, createdAt)
             timestamps: false,

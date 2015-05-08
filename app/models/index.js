@@ -23,14 +23,6 @@ Object.keys(db).forEach(function(modelName) {
   }
 })
 
-
-//db.Organisation.hasMany(db.Probe, { foreignKey: 'organisation_id' })
-//db.Probe.hasMany(db.Metric, { foreignKey: 'metric_id' })
-db.Organisation.hasMany(db.Probe);
-db.Probe.hasMany(db.Metric);
-
-
-
 module.exports = lodash.extend({
   sequelize: sequelize,
   Sequelize: Sequelize

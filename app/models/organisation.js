@@ -34,15 +34,18 @@ module.exports = function (sequelize, DataTypes) {
                     isUrl: true
                 },
                 field: "facebook_profile"
+            },
+            active: {
+                type: DataTypes.BOOLEAN
             }
 
         },
         {
-            classMethods: {
-                associate: function(db) {
-                    Organisation.hasMany(db.Probe)
-                }
+
+            associate: function (db) {
+                Organisation.hasMany(db.Probe, {onDelete: 'cascade', foreignKey: 'organisation_id'})
             },
+
 
             // don't add the timestamp attributes (updatedAt, createdAt)
             timestamps: false,
