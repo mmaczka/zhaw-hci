@@ -7,7 +7,7 @@ angular.module('hci')
         templateUrl: 'views/probe/probes.html',
         controller: 'ProbeController',
         resolve:{
-          resolvedProbe: ['Probe', function (Probe) {
+            resolvedProbes: ['Probe', function (Probe) {
             return Probe.query();
           }]
         }

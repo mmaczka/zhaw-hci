@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('hci')
-  .controller('OrganisationController', ['$scope', '$modal', 'resolvedOrganisation', 'Organisation',
-    function ($scope, $modal, resolvedOrganisation, Organisation) {
+    .controller('OrganisationController', ['$scope', '$modal', 'resolvedOrganisations', 'Organisation',
+        function ($scope, $modal, resolvedOrganisations, Organisation) {
 
-      $scope.organisations = resolvedOrganisation;
+            $scope.organisations = resolvedOrganisations;
 
       $scope.create = function () {
         $scope.clear();
@@ -41,14 +41,14 @@ angular.module('hci')
 
       $scope.clear = function () {
         $scope.organisation = {
-          
-          "name": "",
-          
-          "website": "",
-          
-          "facebookProfile": "",
-          
-          "id": ""
+
+            "name": "",
+
+            "website": "",
+
+            "facebookProfile": "",
+
+            "id": ""
         };
       };
 
@@ -73,9 +73,8 @@ angular.module('hci')
     function ($scope, $modalInstance, organisation) {
       $scope.organisation = organisation;
 
-      
 
-      $scope.ok = function () {
+        $scope.ok = function () {
         $modalInstance.close($scope.organisation);
       };
 

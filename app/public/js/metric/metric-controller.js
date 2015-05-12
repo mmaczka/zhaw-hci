@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('hci')
-  .controller('MetricController', ['$scope', '$modal', 'resolvedMetric', 'Metric',
-    function ($scope, $modal, resolvedMetric, Metric) {
+    .controller('MetricController', ['$scope', '$modal', 'resolvedMetrics', 'Metric',
+        function ($scope, $modal, resolvedMetrics, Metric) {
 
-      $scope.metrics = resolvedMetric;
+            $scope.metrics = resolvedMetrics;
 
       $scope.create = function () {
         $scope.clear();
@@ -41,16 +41,16 @@ angular.module('hci')
 
       $scope.clear = function () {
         $scope.metric = {
-          
-          "type": "",
-          
-          "probeId": "",
-          
-          "value": "",
-          
-          "y": "",
-          
-          "id": ""
+
+            "type": "",
+
+            "probeId": "",
+
+            "value": "",
+
+            "y": "",
+
+            "id": ""
         };
       };
 
@@ -75,9 +75,8 @@ angular.module('hci')
     function ($scope, $modalInstance, metric) {
       $scope.metric = metric;
 
-      
 
-      $scope.ok = function () {
+        $scope.ok = function () {
         $modalInstance.close($scope.metric);
       };
 

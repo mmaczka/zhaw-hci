@@ -21,8 +21,8 @@ module.exports = function (sequelize, DataTypes) {
                 type: DataTypes.STRING,
                 allowNull: false,
                 validate: {
-                    len: [5, 25],
-                    isUrl: true
+                    len: [5, 25]
+                    //isUrl: true
                 },
                 field: "website_url"
             },
@@ -31,7 +31,7 @@ module.exports = function (sequelize, DataTypes) {
                 type: DataTypes.STRING,
                 allowNull: true,
                 validate: {
-                    isUrl: true
+                    //isUrl: true
                 },
                 field: "facebook_profile"
             },

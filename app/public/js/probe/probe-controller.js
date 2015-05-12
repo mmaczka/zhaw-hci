@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('hci')
-  .controller('ProbeController', ['$scope', '$modal', 'resolvedProbe', 'Probe',
-    function ($scope, $modal, resolvedProbe, Probe) {
+    .controller('ProbeController', ['$scope', '$modal', 'resolvedProbes', 'Probe',
+        function ($scope, $modal, resolvedProbes, Probe) {
 
-      $scope.probes = resolvedProbe;
+            $scope.probes = resolvedProbes;
 
       $scope.create = function () {
         $scope.clear();
@@ -41,10 +41,10 @@ angular.module('hci')
 
       $scope.clear = function () {
         $scope.probe = {
-          
-          "organisationId": "",
-          
-          "id": ""
+
+            "organisationId": "",
+
+            "id": ""
         };
       };
 
@@ -69,9 +69,8 @@ angular.module('hci')
     function ($scope, $modalInstance, probe) {
       $scope.probe = probe;
 
-      
 
-      $scope.ok = function () {
+        $scope.ok = function () {
         $modalInstance.close($scope.probe);
       };
 

@@ -44,14 +44,14 @@ app.post('/hci/probes', probes.create)
 app.put('/hci/probes/:id', probes.update)
 app.del('/hci/probes/:id', probes.destroy)
 
-app.get('/hci/metricCalculator', metrics.findAll)
-app.get('/hci/metricCalculator/:id', metrics.find)
-app.post('/hci/metricCalculator', metrics.create)
-app.put('/hci/metricCalculator/:id', metrics.update)
-app.del('/hci/metricCalculator/:id', metrics.destroy)
+app.get('/hci/metrics', metrics.findAll)
+app.get('/hci/metrics/:id', metrics.find)
+app.post('/hci/metrics', metrics.create)
+app.put('/hci/metrics/:id', metrics.update)
+app.del('/hci/metrics/:id', metrics.destroy)
 
 
-var forceSync = true;
+var forceSync = false;
 
 db.sequelize.sync({force: forceSync}).then(function () {
     var port = app.get('port');

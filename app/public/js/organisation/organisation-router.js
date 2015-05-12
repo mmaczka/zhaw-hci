@@ -7,7 +7,7 @@ angular.module('hci')
         templateUrl: 'views/organisation/organisations.html',
         controller: 'OrganisationController',
         resolve:{
-          resolvedOrganisation: ['Organisation', function (Organisation) {
+            resolvedOrganisations: ['Organisation', function (Organisation) {
             return Organisation.query();
           }]
         }

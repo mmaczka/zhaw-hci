@@ -84,23 +84,23 @@
 
                 <th>probeId</th>
 
-                <th>value</th>
+                <th>score</th>
 
-                <th>y</th>
+                <th>output</th>
 
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="metric in metricCalculator">
+            <tr ng-repeat="metric in metrics">
                 <td>{{metric.id}}</td>
 
                 <td>{{metric.type }}</td>
 
                 <td>{{metric.probeId }}</td>
 
-                <td>{{metric.value }}</td>
+                <td>{{metric.score }}</td>
 
-                <td>{{metric.y }}</td>
+                <td>{{metric.output }}</td>
 
                 <td>
                     <button type="submit"
