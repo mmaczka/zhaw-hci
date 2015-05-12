@@ -8,10 +8,6 @@ web:
   links:
    - redis
    - db
-redis:
-    image: redis
-    ports:
-        - "6379:6379"
 db:
   image: postgres
   ports:
@@ -21,7 +17,6 @@ db:
   environment:
     POSTGRES_PASSWORD: docker
     POSTGRES_USER: docker
-
 dbdata:
   image: postgres
   volumes:

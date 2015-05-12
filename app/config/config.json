@@ -2,10 +2,10 @@
     "development": {
         "username": "docker",
         "password": "docker",
-        "database": "hci-dev",
-        "host": "192.168.59.103",
+        "database": "hci",
+        "host": "db",
         "dialect": "postgres",
-        "port": "5433",
+        "port": "5432",
         "native": false
     },
     "production": {
