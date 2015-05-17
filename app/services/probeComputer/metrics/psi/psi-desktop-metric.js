@@ -14,8 +14,14 @@ var calculate = function (url, proxy, callback) {
     }
 // get the PageSpeed Insights report
     psi(url, options, function (err, data) {
-        console.log(err);
-        callback(data.score, JSON.stringify(data.pageStats));
+        if ( err !=null){
+            callback(0, err);
+            console.log(err);
+        }
+        else{
+            callback(data.score, JSON.stringify(data.pageStats));
+        }
+
     });
 
 // output a formatted report to the terminal

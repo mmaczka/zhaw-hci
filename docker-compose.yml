@@ -1,4 +1,4 @@
-web:
+app:
   build: ./app
   volumes:
     - "app:/src/app"
@@ -6,17 +6,13 @@ web:
     - "80:3000"
     - "81:9000"
   links:
-   - redis
    - db
 db:
-  image: postgres
+  build: ./docker/postgres
   ports:
     - "5433:5432"
   volumes_from:
     - dbdata
-  environment:
-    POSTGRES_PASSWORD: docker
-    POSTGRES_USER: docker
 dbdata:
   image: postgres
   volumes:
