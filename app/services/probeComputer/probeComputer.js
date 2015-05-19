@@ -25,20 +25,9 @@ var createOrganisation = function () {
 };
 
 
+
+
 var computeMetrics = function (probe, organisation) {
-
-    metricCalculators.forEach(function (metricCalculator) {
-        console.log("Computing metric " + metricCalculator.name + " for " + organisation.name);
-        metricCalculator.calculate(organisation.websiteUrl, proxy, function (score, output) {
-
-            console.log(metricCalculator.name + " score: " + score + " " + output);
-            var metric = db.Metric.build({probeId: probe.id, type: metricCalculator.name, score: score, output: output})
-            metric.save();
-        });
-    });
-}
-
-var computeMetrics2 = function (probe, organisation) {
 
     metricCalculators.forEach(function (metricCalculator) {
         console.log("Computing metric " + metricCalculator.name + " for " + organisation.name);
@@ -52,29 +41,9 @@ var computeMetrics2 = function (probe, organisation) {
     });
 }
 
+
+
 var computeProbe = function (organisation) {
-
-    console.log("Computing probe for " + organisation.name + " (" + organisation.websiteUrl + ")");
-    var midnight = moment().startOf('day').format();
-
-    // search for attributes
-    db.Probe.find({where: {executionDate: midnight, organisationId: organisation.id}}).then(function (probe) {
-        if (probe != null) {
-            probe.destroy();
-        }
-    })
-    var probe = db.Probe.build({
-        executionDate: midnight,
-        computationDate: moment().format(),
-        organisationId: organisation.id
-    });
-    probe.save().then(function () {
-        computeMetrics(probe, organisation);
-    });
-
-};
-
-var computeProbe2 = function (organisation) {
 
     console.log("Computing probe for " + organisation.name + " (" + organisation.websiteUrl + ")");
     var midnight = moment().startOf('day').format();
@@ -89,17 +58,17 @@ var computeProbe2 = function (organisation) {
             computationDate: moment().format()
         }
     }).spread(function (probe, created) {
-        computeMetrics2(probe, organisation);
+        computeMetrics(probe, organisation);
     });
 
 
 };
 
-var compute = function () {
+var computeAll = function () {
     db.Organisation.findAll({where: {active: true}}).then(function (organisations) {
         console.log("Found " + organisations.length + " active organisation(s). Processing.")
         organisations.forEach(function (organisation) {
-                computeProbe2(organisation)
+                computeProbe(organisation)
             }
         );
     })
@@ -109,7 +78,6 @@ var compute = function () {
 //createOrganisation();
 
 
-compute();
 
 
 
