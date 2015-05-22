@@ -1,7 +1,9 @@
 var db = require('../models')
 
 exports.findAll = function(req, res) {
-    db.Metric.findAll().then(function (entities) {
+    var probeId = req.param('probeId')
+    console.log("probeId:" + probeId);
+    db.Metric.findAll({where: {probeId: probeId}}).then(function (entities) {
     res.json(entities)
   })
 }

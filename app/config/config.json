@@ -1,5 +1,5 @@
 {
-    "development": {
+    "dev": {
         "username": "docker",
         "password": "docker",
         "database": "hci",
@@ -8,7 +8,16 @@
         "port": "5432",
         "native": false
     },
-    "production": {
+    "dev-local": {
+        "username": "docker",
+        "password": "docker",
+        "database": "hci",
+        "host": "192.168.59.103",
+        "dialect": "postgres",
+        "port": "5433",
+        "native": false
+    },
+    "prod": {
         "username": "DATABASE_USERNAME",
         "password": "DATABASE_PASSWORD",
         "database": "DATABASE_NAME",

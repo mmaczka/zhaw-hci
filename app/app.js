@@ -10,6 +10,7 @@ var express        = require('express')
   , organisations = require('./routes/organisations')
   , probes = require('./routes/probes')
   , metrics = require('./routes/metrics')
+    , compute = require('./routes/compute')
 
 var app = express()
 
@@ -23,10 +24,12 @@ app.use(methodOverride())
 app.use(express.static(path.join(__dirname, 'public')))
 
 // development only
-if ('development' === app.get('env')) {
+if ('dev' === app.get('env')) {
   app.use(errorHandler())
 }
-
+else if ('dev-local' === app.get('env')) {
+    app.use(errorHandler())
+}
 
 /*********
  ENDPOINTS
@@ -49,6 +52,9 @@ app.get('/hci/metrics/:id', metrics.find)
 app.post('/hci/metrics', metrics.create)
 app.put('/hci/metrics/:id', metrics.update)
 app.del('/hci/metrics/:id', metrics.destroy)
+
+app.get('/hci/compute/:id', compute.computeProbe)
+
 
 
 var forceSync = false;

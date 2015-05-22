@@ -1,84 +1,89 @@
 'use strict';
 
 angular.module('hci')
-    .controller('OrganisationController', ['$scope', '$modal', 'resolvedOrganisations', 'Organisation',
-        function ($scope, $modal, resolvedOrganisations, Organisation) {
+    .controller('OrganisationController', ['$scope', '$location', '$modal', 'resolvedOrganisations', 'Organisation',
+        function ($scope, $location, $modal, resolvedOrganisations, Organisation) {
 
             $scope.organisations = resolvedOrganisations;
 
-      $scope.create = function () {
-        $scope.clear();
-        $scope.open();
-      };
+            $scope.create = function () {
+                $scope.clear();
+                $scope.open();
+            };
 
-      $scope.update = function (id) {
-        $scope.organisation = Organisation.get({id: id});
-        $scope.open(id);
-      };
+            $scope.update = function (id) {
+                $scope.organisation = Organisation.get({id: id});
+                $scope.open(id);
+            };
 
-      $scope.delete = function (id) {
-        Organisation.delete({id: id},
-          function () {
-            $scope.organisations = Organisation.query();
-          });
-      };
+            $scope.delete = function (id) {
+                Organisation.delete({id: id},
+                    function () {
+                        $scope.organisations = Organisation.query();
+                    });
+            };
 
-      $scope.save = function (id) {
-        if (id) {
-          Organisation.update({id: id}, $scope.organisation,
-            function () {
-              $scope.organisations = Organisation.query();
-              $scope.clear();
-            });
-        } else {
-          Organisation.save($scope.organisation,
-            function () {
-              $scope.organisations = Organisation.query();
-              $scope.clear();
-            });
-        }
-      };
+            $scope.save = function (id) {
+                if (id) {
+                    Organisation.update({id: id}, $scope.organisation,
+                        function () {
+                            $scope.organisations = Organisation.query();
+                            $scope.clear();
+                        });
+                } else {
+                    Organisation.save($scope.organisation,
+                        function () {
+                            $scope.organisations = Organisation.query();
+                            $scope.clear();
+                        });
+                }
+            };
 
-      $scope.clear = function () {
-        $scope.organisation = {
+            $scope.clear = function () {
+                $scope.organisation = {
 
-            "name": "",
+                    "name": "",
 
-            "website": "",
+                    "website": "",
 
-            "facebookProfile": "",
+                    "facebookProfile": "",
 
-            "id": ""
-        };
-      };
+                    "id": ""
+                };
+            };
 
-      $scope.open = function (id) {
-        var organisationSave = $modal.open({
-          templateUrl: 'organisation-save.html',
-          controller: 'OrganisationSaveController',
-          resolve: {
-            organisation: function () {
-              return $scope.organisation;
-            }
-          }
-        });
+            $scope.open = function (id) {
+                var organisationSave = $modal.open({
+                    templateUrl: 'organisation-save.html',
+                    controller: 'OrganisationSaveController',
+                    resolve: {
+                        organisation: function () {
+                            return $scope.organisation;
+                        }
+                    }
+                });
 
-        organisationSave.result.then(function (entity) {
-          $scope.organisation = entity;
-          $scope.save(id);
-        });
-      };
-    }])
-  .controller('OrganisationSaveController', ['$scope', '$modalInstance', 'organisation',
-    function ($scope, $modalInstance, organisation) {
-      $scope.organisation = organisation;
+                organisationSave.result.then(function (entity) {
+                    $scope.organisation = entity;
+                    $scope.save(id);
+                });
+            };
 
 
-        $scope.ok = function () {
-        $modalInstance.close($scope.organisation);
-      };
+            $scope.viewProbes = function (id) {
+                $location.path("/probes/" + id);
+            };
+        }])
+    .controller('OrganisationSaveController', ['$scope', '$modalInstance', 'organisation',
+        function ($scope, $modalInstance, organisation) {
+            $scope.organisation = organisation;
 
-      $scope.cancel = function () {
-        $modalInstance.dismiss('cancel');
-      };
-    }]);
+
+            $scope.ok = function () {
+                $modalInstance.close($scope.organisation);
+            };
+
+            $scope.cancel = function () {
+                $modalInstance.dismiss('cancel');
+            };
+        }]);

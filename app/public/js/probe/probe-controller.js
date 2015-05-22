@@ -1,17 +1,20 @@
 'use strict';
 
 angular.module('hci')
-    .controller('ProbeController', ['$scope', '$modal', 'resolvedProbes', 'Probe',
-        function ($scope, $modal, resolvedProbes, Probe) {
+    .controller('ProbeController', ['$scope', '$modal', 'resolvedProbes', 'Probe', 'resolvedOrganisation', 'ComputeProbe', 'Metric',
+        function ($scope, $modal, resolvedProbes, Probe, resolvedOrganisation, ComputeProbe, Metric) {
 
             $scope.probes = resolvedProbes;
+            $scope.organisation = resolvedOrganisation;
 
-            $scope.create = function () {
-                $scope.clear();
-                $scope.open();
+            $scope.compute = function () {
+                ComputeProbe.get({id: $scope.organisation.id}, function () {
+                    $scope.probes = Probe.query({organisationId: $scope.organisation.id});
+                });
             };
 
-            $scope.update = function (id) {
+
+            $scope.view = function (id) {
                 $scope.probe = Probe.get({id: id});
                 $scope.open(id);
             };
@@ -23,58 +26,38 @@ angular.module('hci')
                     });
             };
 
-            $scope.save = function (id) {
-                if (id) {
-                    Probe.update({id: id}, $scope.probe,
-                        function () {
-                            $scope.probes = Probe.query();
-                            $scope.clear();
-                        });
-                } else {
-                    Probe.save($scope.probe,
-                        function () {
-                            $scope.probes = Probe.query();
-                            $scope.clear();
-                        });
-                }
-            };
 
             $scope.clear = function () {
                 $scope.probe = {
-
                     "organisationId": "",
-
                     "id": ""
                 };
             };
 
             $scope.open = function (id) {
-                var probeSave = $modal.open({
-                    templateUrl: 'probe-save.html',
-                    controller: 'ProbeSaveController',
+                $modal.open({
+                    templateUrl: 'probe-view.html',
+                    controller: 'ProbeViewController',
                     resolve: {
                         probe: function () {
                             return $scope.probe;
+                        },
+                        metrics: function () {
+                            return Metric.query({probeId: id});
                         }
                     }
                 });
 
-                probeSave.result.then(function (entity) {
-                    $scope.probe = entity;
-                    $scope.save(id);
-                });
             };
+
         }])
-    .controller('ProbeSaveController', ['$scope', '$modalInstance', 'probe',
-        function ($scope, $modalInstance, probe) {
+    .controller('ProbeViewController', ['$scope', '$modalInstance', 'probe', 'metrics',
+        function ($scope, $modalInstance, probe, metrics) {
             $scope.probe = probe;
+            $scope.metrics = metrics;
 
 
-            $scope.ok = function () {
+            $scope.close = function () {
                 $modalInstance.close($scope.probe);
-            };
-
-            $scope.cancel = function () {
-                $modalInstance.dismiss('cancel');
             };
         }]);

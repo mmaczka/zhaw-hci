@@ -1,7 +1,9 @@
 var db = require('../models')
 
 exports.findAll = function(req, res) {
-    db.Probe.findAll().then(function (entities) {
+    var organisationId = req.param('organisationId')
+    console.log("organisationId:" + organisationId);
+    db.Probe.findAll({where: {organisationId: organisationId}}).then(function (entities) {
     res.json(entities)
   })
 }

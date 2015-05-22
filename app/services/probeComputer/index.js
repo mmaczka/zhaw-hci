@@ -12,7 +12,6 @@ var metricCalculators = [psiDesktopMetric, psiMobileMetric, htmlValidMetric];
 
 var proxy = null;
 
-
 var createOrganisation = function () {
     var organisation = db.Organisation.build(
         {
@@ -23,9 +22,6 @@ var createOrganisation = function () {
 
     return organisation.save();
 };
-
-
-
 
 var computeMetrics = function (probe, organisation) {
 
@@ -39,17 +35,15 @@ var computeMetrics = function (probe, organisation) {
             });
         });
     });
-}
+};
 
-
-
-var computeProbe = function (organisation) {
+exports.computeOne = function (organisation) {
 
     console.log("Computing probe for " + organisation.name + " (" + organisation.websiteUrl + ")");
     var midnight = moment().startOf('day').format();
 
     // search for attributes
-    db.Probe.findOrCreate({
+    var probe = db.Probe.findOrCreate({
         where: {
             executionDate: midnight,
             organisationId: organisation.id
@@ -60,25 +54,17 @@ var computeProbe = function (organisation) {
     }).spread(function (probe, created) {
         computeMetrics(probe, organisation);
     });
+    console.log("Probe for " + organisation.name + " (" + organisation.websiteUrl + ") computed");
+    return probe;
+}
 
-
-};
-
-var computeAll = function () {
+exports.computeAll = function () {
     db.Organisation.findAll({where: {active: true}}).then(function (organisations) {
-        console.log("Found " + organisations.length + " active organisation(s). Processing.")
+        console.log("Found " + organisations.length + " active organisation(s). Processing.");
         organisations.forEach(function (organisation) {
                 computeProbe(organisation)
             }
         );
     })
 };
-
-
-//createOrganisation();
-
-
-
-
-
 
