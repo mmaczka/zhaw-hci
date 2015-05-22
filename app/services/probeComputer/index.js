@@ -52,10 +52,12 @@ exports.computeOne = function (organisation) {
             computationDate: moment().format()
         }
     }).spread(function (probe, created) {
-        computeMetrics(probe, organisation);
+        computeMetrics(probe, organisation, function () {
+                console.log("Probe for " + organisation.name + " (" + organisation.websiteUrl + ") computed");
+                return probe;
+            }
+        );
     });
-    console.log("Probe for " + organisation.name + " (" + organisation.websiteUrl + ") computed");
-    return probe;
 }
 
 exports.computeAll = function () {

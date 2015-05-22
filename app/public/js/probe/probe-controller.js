@@ -10,6 +10,7 @@ angular.module('hci')
             $scope.compute = function () {
                 ComputeProbe.get({id: $scope.organisation.id}, function () {
                     $scope.probes = Probe.query({organisationId: $scope.organisation.id});
+                    alert("Finished");
                 });
             };
 

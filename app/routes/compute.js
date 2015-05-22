@@ -6,7 +6,10 @@ exports.computeProbe = function (req, res) {
     console.log("Looking for organisation: " + organisationId);
     db.Organisation.find({where: {id: req.param('id')}}).then(function (organisation) {
         console.log("Found organisation for id  " + organisationId + ": '" + organisation.name + "'. Executing probe");
-        var probe = probeComputer.computeOne(organisation);
-        res.json(probe)
+        probeComputer.computeOne(organisation, function (probe) {
+                res.json(probe);
+                console.log("Finishing computeProbe rest call");
+            }
+        );
     })
 };
