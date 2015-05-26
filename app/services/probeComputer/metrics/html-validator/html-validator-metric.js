@@ -14,7 +14,10 @@ var calculate = function (url, proxy, callback) {
         //charset: 'utf-8', // Defaults false for autodetect
         proxy: proxy, // Default to null
         callback: function (results) {
-            var score = results.messages.length;
+            var score = 0;
+            if (results.messages != null) {
+                score = results.messages.length;
+            }
             callback(score, JSON.stringify(results));
             // depending on the output type, res will either be a json object or a html string
         }

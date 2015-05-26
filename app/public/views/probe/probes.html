@@ -5,10 +5,12 @@
     <script type="text/ng-template" id="probe-view.html">
 
             <div class="modal-header">
-                <h4 class="modal-title" id="myProbeLabel">Probe from {{probe.computationDate}}</h4>
+                <h4 class="modal-title" id="myProbeLabel">Probe from {{probe.computationDate.substring(0,10)}}
+                    {{probe.computationDate.substring(11,19)}}</h4>
             </div>
             <div class="modal-body">
                 <div class="table-responsive">
+                    Score: {{probe.score}}
                     <table class="table table-striped">
                         <thead>
                         <tr>
@@ -34,25 +36,24 @@
     </script>
 
     <button class="btn btn-primary btn-lg" ng-click="compute()">
-        <span class="glyphicon glyphicon-flash"></span> Compute a new probe
+        <span class="glyphicon glyphicon-th-list"></span> Compute a new probe
     </button>
 
     <div class="table-responsive">
         <table class="table table-striped">
             <thead>
             <tr>
-                <th>computationDate</th>
-
-                <th>organisationId</th>
-
+                <th>Computation date</th>
+                <th>Execution time</th>
+                <th>score</th>
             </tr>
             </thead>
             <tbody>
             <tr ng-repeat="probe in probes">
                 <!-- 2015-05-21T22:00:00.000Z-->
                 <td>{{probe.computationDate.substring(0,10)}}</td>
-
-                <td>{{probe.organisationId }}</td>
+                <td>{{probe.computationDate.substring(11,19)}}</td>
+                <td>{{probe.score }}</td>
 
                 <td>
                     <button type="submit"

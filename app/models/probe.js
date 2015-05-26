@@ -22,6 +22,12 @@ module.exports = function (sequelize, DataTypes) {
                 allowNull: false,
                 field: "organisation_id"
             }
+            ,
+            score: {
+                type: DataTypes.FLOAT,
+                allowNull: true,
+                field: "organisation_id"
+            }
         },
         {
 

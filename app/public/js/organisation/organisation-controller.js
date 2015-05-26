@@ -1,19 +1,43 @@
 'use strict';
 
 angular.module('hci')
-    .controller('OrganisationController', ['$scope', '$location', '$modal', 'resolvedOrganisations', 'Organisation',
-        function ($scope, $location, $modal, resolvedOrganisations, Organisation) {
+    .controller('OrganisationController', ['$scope', '$location', '$modal', 'resolvedOrganisations', 'Organisation', 'ComputeProbes', 'ComputeProbe',
+        function ($scope, $location, $modal, resolvedOrganisations, Organisation, ComputeProbes, ComputeProbe) {
 
             $scope.organisations = resolvedOrganisations;
 
+            $scope.computingAll = true;
+            $scope.computingOne = true;
+
+            $scope.computeProbes = function () {
+                $scope.computingAll = false;
+                $scope.computingOne = true;
+                var summary = ComputeProbes.get();
+                $scope.activeCount = summary.activeCount;
+            };
+            $scope.computeProbe = function (organisationId, organisationName) {
+                $scope.computingAll = true;
+                $scope.computingOne = false;
+                $scope.organisationName = organisationName;
+
+                ComputeProbe.get({id: organisationId}, function () {
+                    $scope.probes = Probe.query({organisationId: $scope.organisation.id});
+                });
+            };
+
+            $scope.importOrganisations = function () {
+                alert("Not yet implemented");
+            };
+
+
             $scope.create = function () {
                 $scope.clear();
-                $scope.open();
+                $scope.openEdit();
             };
 
             $scope.update = function (id) {
                 $scope.organisation = Organisation.get({id: id});
-                $scope.open(id);
+                $scope.openEdit(id);
             };
 
             $scope.delete = function (id) {
@@ -52,10 +76,27 @@ angular.module('hci')
                 };
             };
 
-            $scope.open = function (id) {
+            $scope.openEdit = function (id) {
                 var organisationSave = $modal.open({
                     templateUrl: 'organisation-save.html',
                     controller: 'OrganisationSaveController',
+                    resolve: {
+                        organisation: function () {
+                            return $scope.organisation;
+                        }
+                    }
+                });
+
+                organisationSave.result.then(function (entity) {
+                    $scope.organisation = entity;
+                    $scope.save(id);
+                });
+            };
+
+            $scope.openEdit = function (id) {
+                var organisationSave = $modal.open({
+                    templateUrl: 'organisations-import.html',
+                    controller: 'OrganisationImportController',
                     resolve: {
                         organisation: function () {
                             return $scope.organisation;
@@ -86,4 +127,17 @@ angular.module('hci')
             $scope.cancel = function () {
                 $modalInstance.dismiss('cancel');
             };
+        }]).controller('OrganisationImportController', ['$scope', '$modalInstance',
+        function ($scope, $modalInstance) {
+            $scope.organisation;
+
+
+            $scope.ok = function () {
+                $modalInstance.close($scope.organisation);
+            };
+
+            $scope.cancel = function () {
+                $modalInstance.dismiss('cancel');
+            };
         }]);
+;

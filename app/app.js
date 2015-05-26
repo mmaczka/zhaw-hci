@@ -52,7 +52,7 @@ app.get('/hci/metrics/:id', metrics.find)
 app.post('/hci/metrics', metrics.create)
 app.put('/hci/metrics/:id', metrics.update)
 app.del('/hci/metrics/:id', metrics.destroy)
-
+app.get('/hci/computeAll', compute.computeProbes)
 app.get('/hci/compute/:id', compute.computeProbe)
 
 

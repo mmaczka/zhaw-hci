@@ -19,9 +19,8 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false,
             field: "probe_id"
         },
-
         score: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.FLOAT,
             allowNull: false
         },
         output: {

@@ -2,7 +2,7 @@
 
     <h2>Organisations</h2>
 
-    <script type = "text/ng-template" id="organisation-save.html">
+    <script type="text/ng-template" id="organisation-save.html">
         <form name="form" role="form" novalidate
               class="ng-scope ng-invalid ng-invalid-required ng-dirty"
               ng-submit="ok()">
@@ -41,10 +41,18 @@
 
                     <input type="text" class="form-control" name="facebookProfile"
                            ng-model="organisation.facebookProfile" ng-required="false"
-                           />
+                        />
                     <span class="error"
                           ng-show="form.facebookProfile.$error.minlength">Must be at least characters.</span>
-                    <span class="error" ng-show="form.facebookProfile.$error.maxlength">Must be at most  characters.</span>
+                    <span class="error"
+                          ng-show="form.facebookProfile.$error.maxlength">Must be at most  characters.</span>
+                </div>
+                <div class="form-group">
+                    <label>Active:</label>
+
+                    <input type="checkbox" class="form-control" name="active"
+                           ng-model="organisation.active" value="true"
+                        />
                 </div>
 
 
@@ -57,9 +65,51 @@
         </form>
     </script>
 
-    <button class="btn btn-primary btn-lg" ng-click="create()">
-        <span class="glyphicon glyphicon-flash"></span> Create a new Organisation
+
+    <script type="text/ng-template" id="organisations-upload.html">
+        <form name="form" role="form" novalidate
+              class="ng-scope ng-invalid ng-invalid-required ng-dirty"
+              ng-submit="ok()">
+
+            <div class="modal-header">
+                <button type="button" class="close"
+                        ng-click="cancel()">&times;</button>
+                <h4 class="modal-title">Upload Excel file</h4>
+            </div>
+            <div class="modal-body">
+
+                <input type="file" ng-file-select="onFileSelect($file)">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" ng-click="cancel()">Cancel
+                </button>
+                <button type="submit" ng-disabled="form.$invalid" class="btn btn-primary">Upload</button>
+            </div>
+        </form>
+    </script>
+
+    <button class="btn btn-primary btn-lg" ng-click="computeProbes()">
+        <span class="glyphicon glyphicon-th-list"></span> Compute probes for all
     </button>
+    <button class="btn btn-lg" ng-click="create()">
+        <span class="glyphicon glyphicon-plus"></span> Create
+    </button>
+
+
+    <button class="btn btn-lg" ng-click="importOrganisations()">
+        <span class="glyphicon glyphicon-log-in"></span> Import organisations
+    </button>
+
+
+    <div collapse="computingAll" class="alert">
+        Computing probes for {{activeCount}} organisations.
+    </div>
+
+
+    <div collapse="computingOne" class="alert">
+        Computing a probe for {{organisationName}}.
+    </div>
 
     <div class="table-responsive">
         <table class="table table-striped">
@@ -72,7 +122,6 @@
                 <th>website</th>
 
                 <th>facebookProfile</th>
-
             </tr>
             </thead>
             <tbody>
@@ -87,19 +136,24 @@
 
                 <td>
                     <button type="submit"
+                            ng-click="viewProbes(organisation.id)"
+                            class="btn btn-primary">
+                        <span class="glyphicon glyphicon-eye-open"></span> View Probes
+                    </button>
+                    <button type="submit"
+                            ng-click="computeProbe(organisation.id,organisation.name)"
+                            class="btn btn-primary">
+                        <span class="glyphicon glyphicon-eye-open"></span> Compute Probe
+                    </button>
+                    <button type="submit"
                             ng-click="update(organisation.id)"
-                            class="btn">
+                            class="btn btn-sm">
                         <span class="glyphicon glyphicon-pencil"></span> Edit
                     </button>
                     <button type="submit"
                             ng-click="delete(organisation.id)"
-                            class="btn btn-danger">
+                            class="btn btn-sm btn-danger">
                         <span class="glyphicon glyphicon-remove-circle"></span> Delete
-                    </button>
-                    <button type="submit"
-                            ng-click="viewProbes(organisation.id)"
-                            class="btn">
-                        <span class="glyphicon glyphicon-glyphicons-signal"></span> View Probes
                     </button>
                 </td>
             </tr>
